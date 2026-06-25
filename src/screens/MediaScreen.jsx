@@ -17,39 +17,17 @@ export default function MediaScreen() {
   return (
     <div className={`screen${view === 'media' ? ' active' : ''}`} id="media-screen">
       <div className="pad">
-        <div className="ph">Media · Bluetooth Audio</div>
-        <div className="mfull">
-          <Disc size="lg" />
-          <div>
-            <div className="mm"><div className="t">{current.t}</div><div className="a">{current.a} · {genre}</div></div>
-            <div className="prog">
-              <div className="barwrap"><i style={{ width: `${progress}%` }} /></div>
-              <div className="tt"><span>{cur}</span><span>3:58</span></div>
-            </div>
-            <div className="mctrl">
-              <button className="mc" onClick={prev}><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5v14M20 5l-10 7 10 7z" /></svg></button>
-              <button className="mc play" onClick={togglePlay}>
-                {playing
-                  ? <svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1" /><rect x="14" y="5" width="4" height="14" rx="1" /></svg>
-                  : <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z" /></svg>}
-              </button>
-              <button className="mc" onClick={next}><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 5v14M4 5l10 7-10 7z" /></svg></button>
-            </div>
-            <div className="volrow">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 5L6 9H2v6h4l5 4V5zM15 9a3 3 0 010 6M18 6a7 7 0 010 12" /></svg>
-              <div
-                className="sld"
-                ref={sld}
-                onPointerDown={(e) => { drag.current = true; e.currentTarget.setPointerCapture(e.pointerId); fromX(e.clientX) }}
-                onPointerMove={(e) => { if (drag.current) fromX(e.clientX) }}
-                onPointerUp={() => (drag.current = false)}
-              >
-                <div className="fill" style={{ width: `${vol}%` }} />
-                <div className="knob" style={{ left: `${vol}%` }} />
-              </div>
-              <span className="vval">{vol}</span>
-            </div>
-          </div>
+        <div className="mfull" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+          <iframe 
+            style={{ borderRadius: '18px', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }} 
+            src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M?utm_source=generator&theme=0" 
+            width="80%" 
+            height="352" 
+            frameBorder="0" 
+            allowFullScreen="" 
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+            loading="lazy">
+          </iframe>
         </div>
       </div>
     </div>

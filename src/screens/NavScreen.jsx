@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useMbux } from '../store.jsx'
 import { Disc } from '../components/ui.jsx'
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import 'leaflet/dist/leaflet.css'
 
 export default function NavScreen() {
   const { view, current, playing, togglePlay, next, prev } = useMbux()
@@ -8,20 +10,18 @@ export default function NavScreen() {
 
   return (
     <div className={`screen${view === 'nav' ? ' active' : ''}`} id="nav-screen">
-      <div className="map">
-        <svg viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid slice" style={{ transform: `scale(${zoom})`, transformOrigin: '165px 500px', transition: 'transform .35s ease' }}>
-          <rect width="1000" height="560" fill="#0a1526" />
-          <path className="wt" d="M0 400 Q260 350 500 410 T1000 388 L1000 560 L0 560Z" />
-          <ellipse className="pk" cx="770" cy="150" rx="150" ry="96" /><ellipse className="pk" cx="170" cy="110" rx="120" ry="74" />
-          <path className="rd2" strokeWidth="9" d="M-20 190 H1020" /><path className="rd2" strokeWidth="9" d="M-20 320 H1020" />
-          <path className="rd2" strokeWidth="9" d="M300 -20 V580" /><path className="rd2" strokeWidth="9" d="M690 -20 V580" />
-          <path className="rd" strokeWidth="16" d="M-20 260 H1020" /><path className="rd" strokeWidth="16" d="M500 -20 V580" />
-          <path className="rt-glow" d="M165 500 L165 260 L500 260 L500 120 L820 120" />
-          <path className="rt" d="M165 500 L165 260 L500 260 L500 120 L820 120" />
-          <g transform="translate(820,120)"><circle r="15" fill="#0a1526" stroke="var(--route)" strokeWidth="3" /><circle r="5" fill="var(--route)" /></g>
-          <g transform="translate(165,500)"><circle r="22" fill="rgba(255,77,77,.16)" /><path d="M0 -14 L10 11 L0 5 L-10 11 Z" fill="var(--pos)" style={{ filter: 'drop-shadow(0 0 8px rgba(255,77,77,.85))' }} /></g>
-          <text className="lbl" x="540" y="240">Lebuhraya Bukit Jalil</text><text className="lbl" x="210" y="350">Bandar Kinrara</text>
-        </svg>
+      <div className="map" style={{ zIndex: 0 }}>
+        <MapContainer center={[3.0487, 101.6214]} zoom={15} style={{ height: '100%', width: '100%' }} zoomControl={false}>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <Marker position={[3.0487, 101.6214]}>
+            <Popup>
+              Lebuhraya Bukit Jalil
+            </Popup>
+          </Marker>
+        </MapContainer>
       </div>
 
       <div className="zl-top">
@@ -59,10 +59,6 @@ export default function NavScreen() {
         </div>
       </div>
 
-      <div className="zoom">
-        <button onClick={() => setZoom((z) => Math.min(1.5, z + 0.12))}>+</button>
-        <button onClick={() => setZoom((z) => Math.max(0.85, z - 0.12))}>−</button>
-      </div>
     </div>
   )
 }
